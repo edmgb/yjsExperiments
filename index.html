@@ -16,7 +16,7 @@
         // this allows you to instantly get the (cached) documents data
         const div = document.createElement('div')
         document.body.appendChild(div)
-        const indexeddbProvider = new IndexeddbPersistence('weedo-count-demo', ydoc)
+        const indexeddbProvider = new IndexeddbPersistence('weedo-count-demo', ydoc, { signaling: ['wss://y-webrtc-ckynwnzncc.now.sh'] })
         indexeddbProvider.whenSynced.then(() => {
         console.log('loaded data from indexed db')
         div.textContent += ' / loaded data from indexed db'
