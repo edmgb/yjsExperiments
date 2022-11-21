@@ -15,7 +15,7 @@
         const ydoc = new Y.Doc()
 
         // Sync clients with the y-webrtc provider.
-        const webrtcProvider = new WebrtcProvider('weedo-count-demo', ydoc, { signaling: ['wss://y-webrtc-ckynwnzncc.now.sh'] })
+        const webrtcProvider = new WebrtcProvider('weedo-count-demo', ydoc/*, {signaling: ['wss://signaling.yjs.dev', 'wss://y-webrtc-signaling-eu.herokuapp.com', 'wss://y-webrtc-signaling-us.herokuapp.com']}*/)
 
         // Sync clients with the y-websocket provider
         const websocketProvider = new WebsocketProvider('wss://demos.yjs.dev', 'weedo-count-demo', ydoc)
