@@ -9,8 +9,14 @@
   },
   "devDependencies": {
     "buffer": "^5.7.1",
+    "crypto-browserify": "^3.12.0",
+    "path-browserify": "^1.0.1",
     "process": "^0.11.10",
-    "y-indexeddb": "^9.0.9"
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.5",
+    "y-dat": "0.0.1",
+    "y-indexeddb": "^9.0.9",
+    "y-websocket": "^1.4.5"
   },
   "scripts": {
     "serve": "npx parcel ./index.html"
