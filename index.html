@@ -1,50 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>yjs test</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>yjs test</title>
+    </head>
 
-<body>
-    <script type=module>
+    <body>
+        <script type=module>
         import * as Y from 'yjs'
         import { WebsocketProvider } from 'y-websocket'
         import { IndexeddbPersistence } from 'y-indexeddb'
 
         const ydoc = new Y.Doc()
-        const websocketProvider = new WebsocketProvider('wss://demos.yjs.dev', 'x-mpo', ydoc)
+        const websocketProvider = new WebsocketProvider('wss://demos.yjs.dev', 'example4711', ydoc)
 
-        const yarray = ydoc.getMap('count')
+        const clicks = ydoc.getArray('clicks') 
 
         const div = document.createElement('div')
         document.body.appendChild(div)
-        const indexeddbProvider = new IndexeddbPersistence('x-mpo', ydoc)
+        
+        const indexeddbProvider = new IndexeddbPersistence('example4711', ydoc)
             indexeddbProvider.whenSynced.then(() => {
             console.log('loaded data from indexed db')
             div.innerText = `loaded data from indexed db\n`
-            ydoc.get('count').forEach(d => {
+            clicks.forEach(d => {
                 console.log("sync map:",d)
-                div.innerText += `${d}\n`
+                div.innerText += `time: ${d.time} - client: ${d.client}\n`
             })
         })
 
-        yarray.observe(event => {
-            console.log('observe map:', ydoc.get('count'));
+        clicks.observe(event => {
+            console.log('observe map:', clicks);
             console.log('changed keys:', event.changes.keys)
-            ydoc.get('count').forEach(d => {
-                div.innerText += `${d}\n`
-            })
+            console.log('event delta', event.changes.delta)
+            div.innerText += `time: ${event.changes.delta[0].insert[0].time} - client: ${event.changes.delta[0].insert[0].client}\n`
         })
 
         const button = document.createElement('button')
         document.body.appendChild(button)
         button.textContent = 'send msg'
         button.addEventListener('click', event => {
-            yarray.set('count', new Date().toISOString());
+            clicks.insert(0, [{time: new Date().toISOString(), client: ydoc.clientID}])
         }) 
     </script>
-</body>
+    </body>
 
 </html>
